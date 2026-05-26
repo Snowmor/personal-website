@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($p = Start-Process -FilePath \"D:\\\\Lenovo\\\\software\\\\git-installer\\\\Git-Installer.exe\" -ArgumentList '/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART','/DIR=\"D:\\\\Lenovo\\\\software\\\\git\"' -Wait -PassThru -NoNewWindow; Write-Output \"ExitCode: $\\($p.ExitCode\\)\")"
+    ]
+  }
+}
