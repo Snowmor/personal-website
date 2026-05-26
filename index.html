@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张璇 — 个人主页</title>
+<style>
+  /* ===== CSS Variables ===== */
+  :root {
+    --color-bg: #ffffff;
+    --color-bg-alt: #f7f8fa;
+    --color-text: #2d3436;
+    --color-text-light: #636e72;
+    --color-accent: #0d9488;
+    --color-accent-light: #f0fdfa;
+    --color-card: #ffffff;
+    --color-border: #e8ecef;
+    --color-tag-bg: #edf2f7;
+    --color-tag-text: #4a5568;
+    --nav-height: 56px;
+    --max-width: 880px;
+    --radius: 10px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  /* ===== Reset & Base ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-height);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .nav-inner {
+    display: flex; gap: 4px;
+    overflow-x: auto;
+    padding: 0 16px;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav a {
+    display: block; padding: 6px 14px; border-radius: 20px;
+    font-size: 13.5px; color: var(--color-text-light); text-decoration: none;
+    white-space: nowrap; transition: all 0.2s;
+  }
+  .nav a:hover { color: var(--color-accent); background: var(--color-accent-light); }
+  .nav a.active { color: var(--color-accent); background: var(--color-accent-light); font-weight: 600; }
+
+  /* ===== Sections ===== */
+  .section { padding: 80px 20px; }
+  .section-alt { background: var(--color-bg-alt); }
+
+  .container { max-width: var(--max-width); margin: 0 auto; }
+
+  .section-title {
+    font-size: 22px; font-weight: 700; color: var(--color-text);
+    margin-bottom: 32px; padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-accent);
+    display: inline-block;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding-top: var(--nav-height);
+  }
+
+  .hero .name {
+    font-size: 42px; font-weight: 800; letter-spacing: 2px;
+    color: var(--color-text); margin-bottom: 8px;
+  }
+
+  .hero .tagline {
+    font-size: 18px; color: var(--color-accent); font-weight: 500;
+    margin-bottom: 24px; line-height: 1.6;
+  }
+
+  .hero .contact {
+    display: flex; flex-wrap: wrap; gap: 10px 24px;
+    font-size: 14px; color: var(--color-text-light);
+  }
+
+  .hero .contact a {
+    color: var(--color-accent); text-decoration: none;
+    border-bottom: 1px dashed var(--color-accent);
+  }
+  .hero .contact a:hover { border-bottom-style: solid; }
+
+  .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-size: 12px; color: var(--color-text-light); letter-spacing: 1px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ===== Cards ===== */
+  .card {
+    background: var(--color-card); border-radius: var(--radius);
+    padding: 28px 30px; margin-bottom: 20px;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--color-border);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .card-title { font-size: 17px; font-weight: 700; color: var(--color-text); }
+  .card-subtitle { font-size: 14px; color: var(--color-text-light); }
+  .card-date { font-size: 13px; color: var(--color-text-light); white-space: nowrap; }
+  .card-role { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 12px; background: var(--color-accent-light); color: var(--color-accent); font-weight: 600; margin-bottom: 12px; }
+
+  .card ul { padding-left: 20px; }
+  .card li { margin-bottom: 6px; font-size: 14px; color: #444; }
+  .card li:last-child { margin-bottom: 0; }
+
+  /* ===== Education ===== */
+  .edu-school { font-size: 18px; font-weight: 700; }
+  .edu-dept { font-size: 14px; color: var(--color-text-light); margin-bottom: 12px; }
+
+  .gpa-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--color-accent-light); padding: 8px 16px;
+    border-radius: 8px; margin: 12px 0; font-size: 14px;
+  }
+  .gpa-badge strong { font-size: 18px; color: var(--color-accent); }
+
+  .course-cat { margin-bottom: 10px; }
+  .course-cat-label { font-size: 13px; font-weight: 700; color: var(--color-accent); margin-bottom: 4px; }
+  .course-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .course-tag { font-size: 12.5px; padding: 3px 10px; border-radius: 14px; background: var(--color-tag-bg); color: var(--color-tag-text); }
+
+  .award { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; margin-top: 8px; color: #b8860b; }
+
+  /* ===== Highlight number ===== */
+  .highlight { color: var(--color-accent); font-weight: 700; }
+
+  /* ===== Skills ===== */
+  .skill-group { margin-bottom: 22px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-label { font-size: 14px; font-weight: 700; color: var(--color-accent); margin-bottom: 8px; }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-item { font-size: 13px; padding: 5px 14px; border-radius: 16px; background: var(--color-accent-light); color: var(--color-accent); font-weight: 500; }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center; padding: 40px 20px;
+    font-size: 13px; color: var(--color-text-light);
+  }
+
+  /* ===== Fade-in animation ===== */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== Print ===== */
+  @media print {
+    .nav { position: static; }
+    .scroll-hint { display: none; }
+    .section { padding: 32px 0; }
+    .hero { min-height: auto; padding-top: 0; }
+    .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+    body { font-size: 12px; }
+    .fade-in { opacity: 1; transform: none; }
+  }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 640px) {
+    .hero .name { font-size: 30px; }
+    .hero .tagline { font-size: 15px; }
+    .section { padding: 56px 16px; }
+    .card { padding: 20px 18px; }
+    .card-header { flex-direction: column; }
+    .nav a { font-size: 12px; padding: 5px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="active">首页</a>
+    <a href="#education">教育背景</a>
+    <a href="#competitions">比赛经历</a>
+    <a href="#projects">项目经历</a>
+    <a href="#campus">校园经历</a>
+    <a href="#skills">技能</a>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<section class="section hero" id="home">
+  <div class="container fade-in">
+    <h1 class="name">张璇</h1>
+    <p class="tagline">
+      香港中文大学（深圳）数据科学学院<br>
+      数据科学与大数据技术 · 学士在读
+    </p>
+    <div class="contact">
+      <span>zhang_xuan_1024@163.com</span>
+      <span>123090834@link.cuhk.edu.cn</span>
+    </div>
+  </div>
+  <div class="scroll-hint">▼ 了解更多</div>
+</section>
+
+<!-- ===== Education ===== -->
+<section class="section section-alt" id="education">
+  <div class="container fade-in">
+    <h2 class="section-title">教育背景</h2>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="edu-school">香港中文大学（深圳）</div>
+          <div class="edu-dept">数据科学学院 · 数据科学与大数据技术，学士</div>
+        </div>
+        <div class="card-date">2023 年 9 月 — 至今</div>
+      </div>
+
+      <div class="gpa-badge">
+        <strong>GPA 3.8 / 4.0</strong>
+        <span>专业前 5%</span>
+      </div>
+
+      <div class="course-cat">
+        <div class="course-cat-label">数据科学核心课程</div>
+        <div class="course-tags">
+          <span class="course-tag">概率论与数理统计</span>
+          <span class="course-tag">随机过程</span>
+          <span class="course-tag">最优化方法</span>
+          <span class="course-tag">数值分析</span>
+          <span class="course-tag">随机模拟</span>
+          <span class="course-tag">机器学习</span>
+        </div>
+      </div>
+
+      <div class="course-cat">
+        <div class="course-cat-label">数学基础</div>
+        <div class="course-tags">
+          <span class="course-tag">微积分</span>
+          <span class="course-tag">线性代数</span>
+          <span class="course-tag">常微分方程</span>
+        </div>
+      </div>
+
+      <div class="course-cat">
+        <div class="course-cat-label">编程与数据分析</div>
+        <div class="course-tags">
+          <span class="course-tag">Python</span>
+          <span class="course-tag">数据结构与算法</span>
+        </div>
+      </div>
+
+      <div class="award">🏅 2023-2024 学业奖学金 &nbsp;·&nbsp; 🏅 学勤书院奖学金</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Competitions ===== -->
+<section class="section" id="competitions">
+  <div class="container fade-in">
+    <h2 class="section-title">比赛经历</h2>
+
+    <!-- MCM/ICM 2026 -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">2026 年美国大学生数学建模竞赛（MCM/ICM）</div>
+        <div class="card-date">2026 年</div>
+      </div>
+      <div class="card-subtitle" style="margin-bottom:8px;">
+        《掌声的面纱：揭露竞争性投票制度中的隐性偏见》
+      </div>
+      <div class="card-role">核心建模成员</div>
+      <ul>
+        <li>基于《Dancing with the Stars》34 季历史数据，构建评委评分与观众投票联合决策分析框架，研究竞争性投票机制中的系统性偏差</li>
+        <li>针对未知观众投票设计反推优化模型，将真实淘汰结果转化为约束条件，并引入平滑性、一致性与熵正则化，模型平均一致性达到 <span class="highlight">98%</span></li>
+        <li>比较百分比制与排名制投票机制，发现名义 50/50 权重下观众投票约贡献 <span class="highlight">94%</span> 的复合得分方差</li>
+        <li>识别 Jerry Rice、Bristol Palin 等争议案例，并提出动态权重方案以平衡娱乐性与竞技公平性</li>
+      </ul>
+    </div>
+
+    <!-- Kaggle -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Kaggle — Hull Tactical (Market Prediction)</div>
+        <div class="card-date">2025 年</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <div class="card-subtitle">《基于 Gradient Boosting 的 S&P 500 战术资产配置预测》</div>
+        <span style="display:inline-block;font-size:12px;padding:2px 10px;border-radius:12px;background:#f0f0f0;color:#888;font-weight:600;">🥈 银牌</span>
+      </div>
+      <ul>
+        <li>构建 S&P 500 次日收益预测与动态仓位配置模型，基于估值、情绪与波动率因子构建 <span class="highlight">111 维</span>金融特征体系，完成数据清洗与特征工程</li>
+        <li>应用并比较 Random Forest 与 Gradient Boosting 等模型</li>
+        <li>设计 tanh 仓位映射与边界裁剪机制，以 Sharpe Ratio 为核心目标优化策略表现，最终交叉验证 Sharpe Ratio 约为 <span class="highlight">3.70</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Projects ===== -->
+<section class="section section-alt" id="projects">
+  <div class="container fade-in">
+    <h2 class="section-title">项目经历</h2>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">DDA3005 数值分析 — 独立研究小组</div>
+        <div class="card-date">2025 年 9 月 — 2025 年 11 月</div>
+      </div>
+      <div class="card-role">组员</div>
+      <ul>
+        <li>针对图像去模糊问题，构建线性逆问题框架，对比 LU / QR 分解与正则化最小二乘方法的重建性能</li>
+        <li>从秩与条件数角度分析不同模糊核特性，发现运动模糊核存在显著秩亏与高条件数，导致直接 LU/QR 方法数值不稳定</li>
+        <li>引入 Tikhonov 正则化思想，将问题转化为正则化最小二乘模型，并通过 Cholesky 分解求解正规方程，显著提升病态场景下复原稳定性</li>
+        <li>在 Type 2 运动模糊场景中，正则化 Cholesky 方法将 Mountain 图像复原误差降低至 <span class="highlight">0.0020</span>、PSNR 提升至 <span class="highlight">57.38 dB</span>，证明正则化方法对病态逆问题具有更强鲁棒性</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Campus ===== -->
+<section class="section" id="campus">
+  <div class="container fade-in">
+    <h2 class="section-title">校园经历</h2>
+
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">淇奥手创社</div>
+          <div class="card-subtitle">香港中文大学（深圳）</div>
+        </div>
+        <div class="card-date">2023 年 9 月 — 2025 年 6 月</div>
+      </div>
+      <div class="card-role">社长 / 美编</div>
+      <ul>
+        <li>负责社团活动策划、宣传与组织统筹，组织开展"泉州簪花围"等校级文化活动</li>
+        <li>任期内社团获评 <span class="highlight">"2023-2024 年度优秀学生社团"</span>及 <span class="highlight">"2024-2025 年度最佳组织建设奖"</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Skills ===== -->
+<section class="section section-alt" id="skills">
+  <div class="container fade-in">
+    <h2 class="section-title">技能</h2>
+
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">编程语言</div>
+        <div class="skill-list">
+          <span class="skill-item">Python</span>
+          <span class="skill-item">Pandas</span>
+          <span class="skill-item">NumPy</span>
+          <span class="skill-item">Scikit-learn</span>
+          <span class="skill-item">SciPy</span>
+          <span class="skill-item">SQL</span>
+          <span class="skill-item">Markdown</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">机器学习</div>
+        <div class="skill-list">
+          <span class="skill-item">随机森林</span>
+          <span class="skill-item">SVM</span>
+          <span class="skill-item">CatBoost</span>
+          <span class="skill-item">XGBoost</span>
+          <span class="skill-item">LightGBM</span>
+          <span class="skill-item">Logistic Regression</span>
+          <span class="skill-item">ARIMA</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label">深度学习</div>
+        <div class="skill-list">
+          <span class="skill-item">MLP</span>
+          <span class="skill-item">DenseNet</span>
+          <span class="skill-item">LSTM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p>张璇 &copy; 2026 &nbsp;·&nbsp; 香港中文大学（深圳）数据科学学院</p>
+</footer>
+
+<!-- ===== JS: Scroll spy & fade-in ===== -->
+<script>
+(function() {
+  /* Intersection Observer — fade-in */
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  /* Scroll spy — nav active state */
+  var sections = document.querySelectorAll('.section[id]');
+  var navLinks = document.querySelectorAll('.nav a');
+
+  function onScroll() {
+    var scrollY = window.scrollY + 80;
+    var current = '';
+    sections.forEach(function(section) {
+      if (scrollY >= section.offsetTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(function(link) {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* Hide scroll hint after first scroll */
+  var hint = document.querySelector('.scroll-hint');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 100 && hint) {
+      hint.style.opacity = '0';
+      hint.style.transition = 'opacity 0.4s';
+    }
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
